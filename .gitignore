@@ -5,3 +5,12 @@ target/
 *.iml
 /node_modules/*
 src/main/webapp/node_modules/*
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
