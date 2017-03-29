@@ -9291,7 +9291,7 @@
 	  'date': true,
 	  'datetime': true,
 	  'datetime-local': true,
-	  'email': true,
+	  "username": true,
 	  'month': true,
 	  'number': true,
 	  'password': true,
@@ -13649,8 +13649,8 @@
 	    } else {
 	      if (props.value == null && props.defaultValue != null) {
 	        // In Chrome, assigning defaultValue to certain input types triggers input validation.
-	        // For number inputs, the display value loses trailing decimal points. For email inputs,
-	        // Chrome raises "The specified value <x> is not a valid email address".
+	        // For number inputs, the display value loses trailing decimal points. For username inputs,
+	        // Chrome raises "The specified value <x> is not a valid username address".
 	        //
 	        // Here we check to see if the defaultValue has actually changed, avoiding these problems
 	        // when the user is inputting text
@@ -27628,7 +27628,7 @@
 	                lastName: this.state.userInfo.lastName,
 	                birthday: this.state.userInfo.birthday,
 	                city: this.state.userInfo.city,
-	                email: this.state.userInfo.email,
+	                email: this.state.userInfo.username,
 	                imagePath: this.state.userInfo.imagePath,
 	                skills: this.state.userInfo.skills,
 	                wish: this.state.userInfo.wish,
@@ -27666,7 +27666,7 @@
 	                        lastName: this.state.userInfo.lastName,
 	                        birthday: this.state.userInfo.birthday,
 	                        city: this.state.userInfo.city,
-	                        email: this.state.userInfo.email,
+	                        email: this.state.userInfo.username,
 	                        imagePath: this.state.userInfo.imagePath,
 	                        skills: this.state.userInfo.skills,
 	                        wish: this.state.userInfo.wish
@@ -29738,7 +29738,7 @@
 	                lastName: this.props.lastName,
 	                birthday: this.props.birthday,
 	                city: this.props.city,
-	                email: this.props.email,
+	                email: this.props.username,
 	                imagePath: this.props.imagePath
 	            }),
 	            menu
@@ -31370,7 +31370,7 @@
 	    var lastName = _props.lastName;
 	    var birthday = _props.birthday;
 	    var city = _props.city;
-	    var email = _props.email;
+	    var email = _props.username;
 	    var imagePath = _props.imagePath;
 
 	    return _react2['default'].createElement(

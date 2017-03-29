@@ -3,7 +3,7 @@ import Avatar from 'material-ui/Avatar';
 import FontIcon from 'material-ui/FontIcon';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
-import {IMAGE_PATH} from "../paths.js";
+import {IMAGE_PATH} from "../constants.js";
 
 
 const UserPersonalInfo = React.createClass({
@@ -35,7 +35,7 @@ const UserPersonalInfo = React.createClass({
               <div className="inline">
                     <b>{firstName} {lastName} </b><br/>
                     <FontIcon className="material-icons">cake</FontIcon> {birthday} <br/>
-                    <FontIcon className="material-icons">location_city</FontIcon> {city} <br/>
+                    <FontIcon className="material-icons">location_city</FontIcon> City <br/>
                     <FontIcon className="material-icons">email</FontIcon> {email}
               </div>
             </div>

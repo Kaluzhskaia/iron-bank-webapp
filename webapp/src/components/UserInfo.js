@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
-import {PATH_LOGOUT} from '../paths.js';
+import {PATH_LOGOUT} from '../constants.js';
 
 import UserPersonalInfo from './UserPersonalInfo.js';
 

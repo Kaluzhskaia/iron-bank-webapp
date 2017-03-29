@@ -13,9 +13,9 @@ import FontIcon from 'material-ui/FontIcon';
 const GroupIcon = <FontIcon className="material-icons">group</FontIcon>;
 const EmailIcon = <FontIcon className="material-icons">face</FontIcon>;
 import {browserHistory} from 'react-router';
-import {PATH_API_USER} from '../paths.js';
+import {PATH_API_USER} from '../constants.js';
 import axios from 'axios';
-import {getImagePath} from '../utils.js'
+import {getImagePath, createAuthorizationTokenHeader} from '../utils.js'
 
 
 const muiTheme = getMuiTheme({});
@@ -24,6 +24,7 @@ const MainLayout = React.createClass({
     getInitialState() {
         return {
             userInfo: {
+                username: "",
                 firstName: "",
                 lastName: "",
                 birthday: "",
@@ -36,35 +37,42 @@ const MainLayout = React.createClass({
         }
     },
 
-    handleShouldUpdate(e){
-        let config = {
-            headers: {"x-auth-token": localStorage.getItem('token')}
-        }
-        axios.get(PATH_API_USER + localStorage.getItem('userId'), config).then(response => {
-            this.setState({
-                userInfo: response.data
-            });
-        });
-    },
-
-    // componentDidMount(){
-
-        // if (localStorage.getItem('token') == null || localStorage.getItem('userId') == null) {
-            // browserHistory.push('login')
-        // } else{
-            // //browserHistory.push('/chats');
-            // let config = {
-                // headers: {"x-auth-token": localStorage.getItem('token')}
-            // }
-            // axios.get(PATH_API_USER + localStorage.getItem('userId'), config).then(response => {
-                // this.setState({
-                    // userInfo: response.data
-                // });
-            // });
-
-        // };
-
+    // handleShouldUpdate(e){
+    //     let config = {
+    //         headers: {"x-auth-token": localStorage.getItem('token')}
+    //     }
+    //     axios.get(PATH_API_USER, configHeaderToken).then(response => {
+    //         this.setState({
+    //             userInfo: response.data
+    //         });
+    //     });
     // },
+
+    componentDidMount(){
+
+
+        // axios.get('/api/user', {
+        //     headers: createAuthorizationTokenHeader()
+        // })
+        if (localStorage.getItem('token') == null) {
+            browserHistory.push('login')
+        } else{
+            //browserHistory.push('/chats');
+            axios.get("http://localhost:8080/api/user", {
+                headers: createAuthorizationTokenHeader()
+            }).then(response => {
+                this.setState({
+                    userInfo: response.data
+                });
+            }).catch(
+                this.setState({
+                userInfo: {firstName: "noo"}
+                })
+            );
+
+        };
+
+    },
     renderChild(){
         var child = null;
         if (this.props.children.type.displayName=="UserEditor") {

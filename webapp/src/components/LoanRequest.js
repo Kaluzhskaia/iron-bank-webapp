@@ -8,7 +8,7 @@ import {browserHistory} from 'react-router';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
-import {PATH_REGISTRATION} from "../paths";
+import {PATH_REGISTRATION} from "../constants";
 
     const styles = {
         customWidth: {

@@ -13,11 +13,18 @@ import MainLayout from './components/MainLayout';
 
 //Components
 import LoanRequest from './components/LoanRequest'
+import LoginForm from './components/LoginForm'
+import LoginPage from './components/LoginPage'
+import RegistrationForm from './components/RegistrationForm'
 
 export default (
     <Router history={browserHistory}>
-        <Route path="/" component={MainLayout}>
-            <IndexRoute component={LoanRequest}/>
+        <Route  component={MainLayout}>
+            <Route path = "/" component={LoanRequest}/>
+        </Route>
+        <Route component={LoginPage}>
+            <Route path="login" component={LoginForm}/>
+            <Route path="registration" component={RegistrationForm}/>
         </Route>
     </Router>
 );

@@ -2,21 +2,15 @@
  * Created by Mikhail on 05.12.2016.
  */
 
-import {PATH_API_USER, IMAGE_PATH} from './paths.js';
+import {IMAGE_PATH, TOKEN, JWT_HEADER} from "./constants.js";
 
-export function getPathApiUserSkills() {
-    return PATH_API_USER + localStorage.getItem('userId') + '/skill/';
+export function getToken() {
+    return localStorage.getItem(TOKEN)
 }
 
-export function getPathApiUserWishes() {
-    return PATH_API_USER + localStorage.getItem('userId') + '/wish/';
-}
+export function createAuthorizationTokenHeader() {
+    return {"Authorization" : getToken()}
 
-export function getPathApiUserMessages() {
-    return PATH_API_USER + localStorage.getItem('userId') + '/messages/';
-}
-export function getPathApiUserChats() {
-    return PATH_API_USER + localStorage.getItem('userId') + '/chats/';
 }
 
 export function getConfig() {
