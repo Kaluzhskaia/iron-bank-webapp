@@ -33,7 +33,7 @@ public class UserController {
     public JwtUser getUser(HttpServletRequest request){
         String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername("user");
+        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
         return user;
     }
 }

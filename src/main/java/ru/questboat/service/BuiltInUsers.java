@@ -65,8 +65,9 @@ public class BuiltInUsers {
             user.setLastName("Userov");
             user.setImagePath("default-user.png");
             user.setEnabled(true);
-            user.setBirthday(new Date(0));
+            user.setBirthday(new Date(788832000000L));
             user.setLastPasswordResetDate(new Date(0));
+            user.setCity("CityIB");
 
             Authority userAuthority = authorityRepository.findByName(AuthorityName.ROLE_CLIENT);
 

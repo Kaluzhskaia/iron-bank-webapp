@@ -67,6 +67,10 @@ public @Data class User {
     @NotNull
     private Date birthday;
 
+    @Column(name = "CITY")
+    @NotNull
+    private String city;
+
 
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -29,13 +29,13 @@ const UserPersonalInfo = React.createClass({
         } = this.props;
         return (
             <div className="user-personal-info">
-              <div className="user-personal-image-div">
-                <img className="user-personal-image" src={IMAGE_PATH + imagePath} onLoad={this.changeSize} onChange={this.changeSize}/>
-              </div>
+              {/*<div className="user-personal-image-div">*/}
+                {/*<img className="user-personal-image" src={IMAGE_PATH + imagePath} onLoad={this.changeSize} onChange={this.changeSize}/>*/}
+              {/*</div>*/}
               <div className="inline">
                     <b>{firstName} {lastName} </b><br/>
                     <FontIcon className="material-icons">cake</FontIcon> {birthday} <br/>
-                    <FontIcon className="material-icons">location_city</FontIcon> City <br/>
+                    <FontIcon className="material-icons">location_city</FontIcon> {city} <br/>
                     <FontIcon className="material-icons">email</FontIcon> {email}
               </div>
             </div>

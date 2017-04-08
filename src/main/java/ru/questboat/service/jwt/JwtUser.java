@@ -1,9 +1,13 @@
 package ru.questboat.service.jwt;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Collection;
 import java.util.Date;
 
@@ -21,6 +25,9 @@ public class JwtUser implements UserDetails {
     private final Collection<? extends GrantedAuthority> authorities;
     private final boolean enabled;
     private final Date lastPasswordResetDate;
+    private final String city;
+
+    @JsonView
     private final Date birthday;
 
     public JwtUser(
@@ -32,7 +39,8 @@ public class JwtUser implements UserDetails {
           String password, Collection<? extends GrantedAuthority> authorities,
           boolean enabled,
           Date lastPasswordResetDate,
-          Date birthday
+          Date birthday,
+          String city
     ) {
         this.id = id;
         this.username = username;
@@ -44,6 +52,7 @@ public class JwtUser implements UserDetails {
         this.enabled = enabled;
         this.lastPasswordResetDate = lastPasswordResetDate;
         this.birthday = birthday;
+        this.city = city;
     }
 
     @JsonIgnore
@@ -107,7 +116,12 @@ public class JwtUser implements UserDetails {
         return lastPasswordResetDate;
     }
 
+   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     public Date getBirthday() {
         return birthday;
+    }
+
+    public String getCity() {
+        return city;
     }
 }
