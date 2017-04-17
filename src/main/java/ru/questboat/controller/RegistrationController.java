@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import ru.questboat.service.UserManager;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,8 +56,10 @@ public class RegistrationController {
     public User addUser(@RequestBody User user){
         System.out.println(user.getPassword());
         System.out.println(passwordEncoder.encode(user.getPassword()));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setImagePath(IMAGE_PATH);
+        user.setEnabled(true);
+        user.setLastPasswordResetDate(new Date(System.currentTimeMillis()));
 //        Mail mail = Mail.builder()
 //                .to(user.getEmail())
 //                .subject("Регистрация на sawpskill.ru")

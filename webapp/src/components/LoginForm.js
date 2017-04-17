@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import {Link} from 'react-router';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
-import {PATH_AUTH, TOKEN} from '../constants.js';
+import {PATH_AUTH, TOKEN, ROLES} from '../constants.js';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -51,7 +51,7 @@ const LoginForm = React.createClass({
             .then(response => {
                 this.setState({errorMessage: ""});
                 localStorage.setItem(TOKEN, response.data.token);
-                // localStorage.setItem('userId', response.data.id);
+                localStorage.setItem(ROLES, response.data.authorities);
                 browserHistory.push('/');
             })
             .catch(response => {

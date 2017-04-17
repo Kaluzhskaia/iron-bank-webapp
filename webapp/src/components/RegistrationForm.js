@@ -16,6 +16,7 @@ import RegConfirmation from './RegConfirmation';
 import RegSuccess from './RegSuccess';
 
 var fieldValues = {
+    username  : null,
     email     : null,
     password  : null,
     city      : null,
@@ -29,10 +30,11 @@ var fieldValues = {
 const RegistrationForm = React.createClass({
 
     singUp: function(){
-        axios.post(PATH_REGISTRATION+'/user',
+        axios.post(PATH_REGISTRATION+'/new-user',
             {
-                email     : fieldValues.username,
-                password  : btoa(fieldValues.password),
+                username  : fieldValues.username,
+                email     : fieldValues.email,
+                password  : fieldValues.password,
                 city      : fieldValues.city,
                 birthday  : fieldValues.birthday,
                 firstName : fieldValues.firstName,

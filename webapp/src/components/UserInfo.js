@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
-import {PATH_LOGOUT} from '../constants.js';
+import {PATH_LOGOUT, ROLES, TOKEN} from '../constants.js';
 
 import UserPersonalInfo from './UserPersonalInfo.js';
 
@@ -17,14 +17,8 @@ import FontIcon from 'material-ui/FontIcon';
 const UserInfo = React.createClass({
 
     handleTouchTap: function (e) {
-        axios.post(
-            PATH_LOGOUT,
-            {
-                id: localStorage.getItem('userId'),
-                token: localStorage.getItem('token')
-            });
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
+        localStorage.removeItem(TOKEN);
+        localStorage.removeItem(ROLES);
     },
 
     render: function () {

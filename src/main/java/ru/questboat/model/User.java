@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Mikhail Falaleev on 25.03.2017.
  */
 
-@Entity
+@Entity(name = "USERS")
 public @Data class User {
 
     public User(){}
@@ -26,7 +26,7 @@ public @Data class User {
 
     @Column(name = "USERNAME", length = 50, unique = true)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 2, max = 50)
     private String username;
 
     @Column(name = "PASSWORD", length = 100)
@@ -36,12 +36,12 @@ public @Data class User {
 
     @Column(name = "FIRSTNAME", length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 2, max = 50)
     private String firstName;
 
     @Column(name = "LASTNAME", length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 2, max = 50)
     private String lastName;
 
     @Column(name = "EMAIL", length = 50)

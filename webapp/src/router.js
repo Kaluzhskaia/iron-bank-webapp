@@ -12,7 +12,7 @@ import { Router, Route, hashHistory, browserHistory, IndexRoute } from 'react-ro
 import MainLayout from './components/MainLayout';
 
 //Components
-import LoanRequest from './components/LoanRequest'
+import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import LoginPage from './components/LoginPage'
 import RegistrationForm from './components/RegistrationForm'
@@ -20,7 +20,8 @@ import RegistrationForm from './components/RegistrationForm'
 export default (
     <Router history={browserHistory}>
         <Route  component={MainLayout}>
-            <Route path = "/" component={LoanRequest}/>
+            <Route  path = "/" component={Home}/>
+            {/*<Route  component={LoanRequestManager}/>*/}
         </Route>
         <Route component={LoginPage}>
             <Route path="login" component={LoginForm}/>

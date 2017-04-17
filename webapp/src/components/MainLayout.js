@@ -66,7 +66,7 @@ const MainLayout = React.createClass({
                 });
             }).catch(
                 this.setState({
-                userInfo: {firstName: "noo"}
+                userInfo: {firstName: "Can not get name"}
                 })
             );
 

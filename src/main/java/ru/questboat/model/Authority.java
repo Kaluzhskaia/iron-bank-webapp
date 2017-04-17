@@ -3,6 +3,7 @@ package ru.questboat.model;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
  */
 
 @Entity
+@ToString(of = "name")
 public @Data class Authority {
 
     @Id
@@ -27,6 +29,8 @@ public @Data class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private @Getter@Setter List<User> users;
+
+
 
 
 }

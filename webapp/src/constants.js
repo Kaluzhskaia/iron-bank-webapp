@@ -10,6 +10,7 @@ export const PATH_REGISTRATION = SERVER_HOST + "/registration";
 export const IMAGE_PATH = SERVER_HOST + "/images/";
 
 //constants
-export const TOKEN = "token"
-export const JWT_HEADER = "Authorization"
+export const TOKEN = "token";
+export const JWT_HEADER = "Authorization";
+export const ROLES = "authorities";
 

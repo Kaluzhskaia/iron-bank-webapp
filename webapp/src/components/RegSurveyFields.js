@@ -12,8 +12,8 @@ import {browserHistory} from 'react-router';
 import {PATH_AUTH} from '../constants.js';
 import DatePicker from 'material-ui/DatePicker';
 
-const regField = /^[\-а-яА-ЯёЁa-zA-Z]+$/;
-const error = "Поле может содержать только руссские или латинские буквы"
+const regField = /^[\-а-яА-ЯёЁa-zA-Z]{2,}$/;
+const error = "Поле может содержать только руссские или латинские буквы и состоять минимум из 2 символов"
 var firstNameAccept = false;
 var secondNameAccept = false;
 var cityAccept = false;
@@ -124,7 +124,7 @@ const RegSurveyFields = React.createClass({
                                style={{width: '360px', margin: '20px', marginBottom: '20px', marginTop: '0px'}}
                     />
                     <DatePicker name ='date' ref='date' hintText="Дата рождения" onChange={this.handleOnTouch}
-                                style={{width: '360px', margin: '20px', marginBottom: '30px', marginTop: '0px'}} />
+                               style={{width: '360px', margin: '20px', marginBottom: '30px', marginTop: '0px'}} />
                     <div>
                         <RaisedButton
                                 style={{width: '200px', float: 'left'}}

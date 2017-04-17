@@ -15,8 +15,10 @@ import {PATH_REGISTRATION} from "../constants";
 
 const regPswd = /^(.{5,})$/
 const regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+const regUsername = /^([A-Za-z0-9_\-\.]{2,})$/
 var emailAccept = false;
 var pswdAccept  = false;
+var namesAccept = false;
 
 const RegAccountFields = React.createClass({
 
@@ -28,29 +30,42 @@ const RegAccountFields = React.createClass({
             password     : '',
             errorPswdTxt1: '',
             errorPswdTxt2: '',
-            errorMailTxt : ''
+            errorMailTxt : '',
+            errorUsernameTxt: ''
         }
     },
 
     handleOnClickNext(e) {
         var email = this.state.username;
-        axios.post(PATH_REGISTRATION +'/username', {'email': this.state.username})
+        axios.post(PATH_REGISTRATION +'/check-email-and-username', {'email': this.state.username})
         .then(response => {
-            this.props.saveValues({password: this.state.password, email: this.state.username});
+            this.props.saveValues({password: this.state.password, username: this.state.username, email: this.state.email});
             this.props.nextStep();
         })
         .catch(response => {
-            this.setState({errorMailTxt: 'Email уже привязан к акканту'});
+            this.setState({errorUsernameTxt: 'Имя занято'});
         });
     },
 
     activateNextBtn(){
-        if (emailAccept && pswdAccept && this.state.password != ''){
+        if (namesAccept && emailAccept && pswdAccept && this.state.password != ''){
             this.setState({btnDisable : false});
         }
         else{
             this.setState({btnDisable : true});
         }
+    },
+    handleChangeUsername(e){
+        if (regUsername.test(e.target.value)) {
+            this.setState({errorUsernameTxt: ''});
+            this.setState({username: e.target.value});
+            namesAccept = true;
+        }
+        else {
+            this.setState({errorUsernameTxt: 'Название аккаунта должно содержать только латинкские буквы и цифры и состоять минимум из 2 символов'});
+            namesAccept = false;
+        }
+        this.activateNextBtn();
     },
     handleChangeEmail(e){
         if (regEmail.test(e.target.value)) {
@@ -59,7 +74,7 @@ const RegAccountFields = React.createClass({
             emailAccept = true;
         }
         else {
-            this.setState({errorMailTxt: 'Некорректный username'});
+            this.setState({errorMailTxt: 'Некорректный email'});
             emailAccept = false;
         }
         this.activateNextBtn();
@@ -98,8 +113,10 @@ const RegAccountFields = React.createClass({
             <div className="label">Регистрация</div>
             <Paper zDepth={2}>
                 <form>
-                    <TextField name='email'  hintText="Email" onChange={this.handleChangeEmail} errorText={this.state.errorMailTxt}
+                    <TextField name='username'  hintText="username" onChange={this.handleChangeUsername} errorText={this.state.errorUsernameTxt}
                                style={{width: '360px', margin: '20px'}} />
+                    <TextField name='email'  hintText="Email" onChange={this.handleChangeEmail} errorText={this.state.errorMailTxt}
+                               style={{width: '360px', margin: '20px', marginTop: '0px'}} />
                     <TextField name='password' ref="password" hintText="Password" type="password" onChange={this.handleChangePswd} errorText={this.state.errorPswdTxt1}
                                style={{width: '360px', margin: '20px', marginBottom: '30px', marginTop: '0px'}}
                                />

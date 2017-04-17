@@ -9,4 +9,5 @@ public interface UserManager {
 
     User save(User user);
     User findByUsernameOrEmail(String username, String email);
+    User findByUsername(String username);
 }

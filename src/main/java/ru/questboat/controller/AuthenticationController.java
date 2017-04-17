@@ -15,14 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ru.questboat.model.User;
-import ru.questboat.repository.UserRepository;
+import ru.questboat.model.Authority;
+import ru.questboat.service.UserManager;
 import ru.questboat.service.jwt.JwtAuthenticationRequest;
 import ru.questboat.service.jwt.JwtAuthenticationResponse;
 import ru.questboat.service.jwt.JwtTokenUtil;
 import ru.questboat.service.jwt.JwtUser;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class AuthenticationController {
@@ -40,18 +42,12 @@ public class AuthenticationController {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    UserRepository userRepository;
+    private UserManager userManager;
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
 
 
-        User user = userRepository.findByUsername("user");
-        System.out.println("in DB username is"+ user.getUsername());
-        System.out.println("in DB  passwd is " + user.getPassword());
-
-        System.out.println("in request username is"+ authenticationRequest.getUsername());
-        System.out.println("in request passwd is " + authenticationRequest.getPassword());
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -65,8 +61,11 @@ public class AuthenticationController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails, device);
 
+        ArrayList<Authority> authorities = new ArrayList<>(userManager.findByUsername(authenticationRequest.getUsername()).getAuthorities());
+        List<String> authoritiesString = new ArrayList<>();
+        authorities.forEach(authority -> authoritiesString.add(authority.getName().toString()));
         // Return the token
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(token, authoritiesString));
     }
 
     @RequestMapping(value = "${jwt.route.authentication.refresh}", method = RequestMethod.GET)

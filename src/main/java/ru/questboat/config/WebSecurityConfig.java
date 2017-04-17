@@ -49,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationTokenFilter();
     }
 
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -63,7 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-
 
     @Autowired
     CorsFilter corsFilter;
@@ -82,27 +82,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                //test permit
-                .antMatchers(
-                        HttpMethod.GET,
-                        "/api/user"
-                ).permitAll()
-
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/registration/**").permitAll()
                 .anyRequest().authenticated();
-//                .antMatchers("api/admin/**").hasRole("ROLE_ADMIN")
 
         // Custom JWT based security filter
         httpSecurity
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class);
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+//                .addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class);
 
 
 
         // disable page caching
         httpSecurity.headers().cacheControl();
     }
+
+
 }

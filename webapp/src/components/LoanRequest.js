@@ -10,15 +10,18 @@ import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import {PATH_REGISTRATION} from "../constants";
 
-    const styles = {
-        customWidth: {
-            width: 250,
-        },
-        formWidth: {
-            width: 400,
-            height: 400
-        },
-    };
+const styles = {
+    customWidth: {
+        width: 250,
+    },
+    formWidth: {
+        width: 400,
+        height: 430
+    },
+};
+
+
+const regExpAmount = /^([0-9]+)$/;
 
 const LoanRequest = React.createClass({
 
@@ -30,13 +33,22 @@ const LoanRequest = React.createClass({
             purpose        : '',
             guarantor      : '',
             pledge         : '',
-            income         : ''
+            income         : '',
+            amountErrorText: '',
+            errorText      : '',
+            submitEnabled  : false
         }
     },
 
     handleOnChange(e){
         if (e.target.name == "amount") {
-            this.setState({amount: e.target.value});
+            if (regExpAmount.test(e.target.value)) {
+                this.setState({amount: e.target.value});
+            }
+            else {
+                this.setState({amountErrorText: "Только циферки, дружище"})
+            }
+
         }
         if (e.target.name == "purpose") {
             this.setState({purpose: e.target.value});
@@ -52,14 +64,29 @@ const LoanRequest = React.createClass({
         }
     },
 
+
+
     handleOnClick(e) {
-        axios.post(PATH_REGISTRATION +'/loan',
-            {
-                amount: this.state.amount,
-                purpose: this.state.purpose ,
-                guarantor: this.state.guarantor,
-                pledge: this.state.pledge,
-                income : this.state.income });
+        if (
+            this.state.amount != '' &&
+            this.state.purpose != '' &&
+            this.state.guarantor != '' &&
+            this.state.pledge != '' &&
+            this.state.income != '')
+        {
+            this.setState({errorText: ''});
+            axios.post(PATH_REGISTRATION + '/loan',
+                {
+                    amount: this.state.amount,
+                    purpose: this.state.purpose,
+                    guarantor: this.state.guarantor,
+                    pledge: this.state.pledge,
+                    income: this.state.income
+                });
+        }
+        else {
+            this.setState({errorText: 'Все поля должны быть заполнены'})
+        }
     },
 
     render: function () {
@@ -72,8 +99,8 @@ const LoanRequest = React.createClass({
                             style={styles.formWidth}>
                         <div>
 
-                        <div style={{marginTop: '10px'}}>Сумма:</div>
-                        <div><TextField name='amount' onChange={this.handleOnChange}/></div>
+                        <div style={{marginTop: '10px'}}>Сумма (в железных монетах):</div>
+                        <div><TextField name='amount' errorText={this.state.amountErrorText} onChange={this.handleOnChange}/></div>
                         <div>Цель:</div>
                         <div><TextField name='purpose' onChange={this.handleOnChange}/></div>
                         <div>Поручитель:</div>
@@ -83,13 +110,15 @@ const LoanRequest = React.createClass({
                         <div>Доход</div>
                         <div><TextField name='income' onChange={this.handleOnChange}/></div>
 
+                        <div className="error-message">{this.state.errorText}</div>
 
                         <RaisedButton
                             name='nextStep'
                             primary={true}
-                            style={{width: '200px'}}
+                            style={{width: '200px', marginTop: '40px'}}
                             label="Подать заявку"
                             onTouchTap={this.handleOnClick}
+                            disabled={this.state.submitEnabled}
                         />
 
                         </div>

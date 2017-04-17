@@ -15,6 +15,8 @@ public class UserManagerImp implements UserManager {
     @Autowired
     UserRepository userRepository;
 
+
+
     @Override
     public User save(User user) {
         return userRepository.save(user);
@@ -23,5 +25,10 @@ public class UserManagerImp implements UserManager {
     @Override
     public User findByUsernameOrEmail(String username, String email){
         return userRepository.findByUsernameOrEmail(username, email);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }
