@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {ROLES} from "../constants";
-import LoanRequest from './LoanRequest';
+import LoanRequestForm from './LoanRequestForm';
 import ManagerHome from './ManagerHome';
 import AdminHome from './AdminHome';
 import CollectorHome from './CollectorHome';
@@ -25,7 +25,7 @@ const Home = React.createClass({
             else if (roles.includes("ROLE_COLLECTOR"))
                 return <CollectorHome/>;
             else if (roles.includes("ROLE_CLIENT"))
-                return <LoanRequest/>;
+                return <LoanRequestForm/>;
             else
                 return <div>Can not identify user authorities</div>
     }
