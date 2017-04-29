@@ -86,6 +86,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
+                .antMatchers("/api/loan-request").hasRole("CLIENT")
+                .antMatchers("/api/loan-request/new").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter

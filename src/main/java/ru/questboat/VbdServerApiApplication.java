@@ -8,6 +8,5 @@ public class VbdServerApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VbdServerApiApplication.class, args);
-
 	}
 }

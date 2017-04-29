@@ -1,6 +1,7 @@
 package ru.questboat.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,37 +17,41 @@ import java.util.List;
 @Entity(name = "USERS")
 public @Data class User {
 
-    public User(){}
-
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+    @JsonView(View.Base.class)
     private Long id;
 
     @Column(name = "USERNAME", length = 50, unique = true)
     @NotNull
     @Size(min = 2, max = 50)
+    @JsonView(View.Base.class)
     private String username;
 
     @Column(name = "PASSWORD", length = 100)
     @NotNull
     @Size(min = 4, max = 100)
+    @JsonIgnore
     private String password;
 
     @Column(name = "FIRSTNAME", length = 50)
     @NotNull
     @Size(min = 2, max = 50)
+    @JsonView(View.Summary.class)
     private String firstName;
 
     @Column(name = "LASTNAME", length = 50)
     @NotNull
     @Size(min = 2, max = 50)
+    @JsonView(View.Summary.class)
     private String lastName;
 
     @Column(name = "EMAIL", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
+    @JsonView(View.Summary.class)
     private String email;
 
     @Column(name = "ENABLED")
@@ -60,15 +65,18 @@ public @Data class User {
 
     @Column(name = "IMAGE_PATH")
     @NotNull
+    @JsonView(View.Summary.class)
     private String imagePath;
 
     @Column(name = "BIRTHDAY")
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
+    @JsonView(View.Summary.class)
     private Date birthday;
 
     @Column(name = "CITY")
     @NotNull
+    @JsonView(View.Summary.class)
     private String city;
 
 

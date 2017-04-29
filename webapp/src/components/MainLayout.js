@@ -37,23 +37,9 @@ const MainLayout = React.createClass({
         }
     },
 
-    // handleShouldUpdate(e){
-    //     let config = {
-    //         headers: {"x-auth-token": localStorage.getItem('token')}
-    //     }
-    //     axios.get(PATH_API_USER, configHeaderToken).then(response => {
-    //         this.setState({
-    //             userInfo: response.data
-    //         });
-    //     });
-    // },
-
-    componentDidMount(){
+    componentWillMount(){
 
 
-        // axios.get('/api/user', {
-        //     headers: createAuthorizationTokenHeader()
-        // })
         if (localStorage.getItem('token') == null) {
             browserHistory.push('login')
         } else{

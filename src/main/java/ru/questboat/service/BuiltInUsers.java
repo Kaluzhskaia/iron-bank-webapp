@@ -27,8 +27,8 @@ public class BuiltInUsers {
     @Autowired
     private AuthorityRepository authorityRepository;
 
-    private final String CLIENT_PSWD        = "user";
-    private final String CLIENT_USERNAME    = "user";
+    private final String CLIENT_PSWD        = "client";
+    private final String CLIENT_USERNAME    = "client";
     private final String MANAGER_PSWD       = "manager";
     private final String MANAGER_USERNAME   = "manager";
     private final String COLLECTOR_PSWD     = "collector";
@@ -78,7 +78,7 @@ public class BuiltInUsers {
         user.setEmail(String.format("%1$s@%1$s.com", name));
         user.setFirstName(name.substring(0, 1).toUpperCase()+name.substring(1));
         user.setLastName(name.substring(0, 1).toUpperCase()+name.substring(1) + "ov");
-        user.setImagePath("default-user.png");
+        user.setImagePath("default-client.png");
         user.setEnabled(true);
         user.setBirthday(new Date(788832000000L));
         user.setLastPasswordResetDate(new Date(0));

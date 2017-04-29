@@ -34,13 +34,8 @@ public class RegistrationController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    MailService mailService;
-
-//    @JsonView(View.SUMMARY.class)
     @RequestMapping(value = "/check-email-and-username", method = RequestMethod.POST)
     public ResponseEntity<?> isEmail(@RequestBody User muser){
-//        System.out.println(muser.getEmail());
         User user = userManager.findByUsernameOrEmail(muser.getEmail(), muser.getUsername());
         if (null == user) {
             return ResponseEntity.ok(null);
@@ -50,8 +45,6 @@ public class RegistrationController {
         }
     }
 
-    // Insert user in DB
-//    @JsonView(View.SUMMARY.class)
     @RequestMapping(value = "/new-user", method = RequestMethod.POST)
     public User addUser(@RequestBody User user){
         System.out.println(user.getPassword());
@@ -60,41 +53,8 @@ public class RegistrationController {
         user.setImagePath(IMAGE_PATH);
         user.setEnabled(true);
         user.setLastPasswordResetDate(new Date(System.currentTimeMillis()));
-//        Mail mail = Mail.builder()
-//                .to(user.getEmail())
-//                .subject("Регистрация на sawpskill.ru")
-//                .text(String.format("Привет %s, ты успешно зарегистрировался на swapskill.ru :)", user.getFirstName()))
-//                .build();
-//        try {
-//            mailService.send(mail);
-//        } catch (MessagingException ex){
-//            ex.printStackTrace();
-//            return userManager.save(user);
-//        }
         return userManager.save(user);
     }
-
-
-//    @Autowired
-//    LoanRequstRepository loanRequstRepository;
-//
-//    @JsonView(View.SUMMARY.class)
-//    @RequestMapping(value = "/loan", method = RequestMethod.POST)
-//    public LoanRequest loan(@RequestBody LoanRequest loanRequest){
-//        System.out.println(loanRequest.getAmount());
-//        System.out.println(loanRequest.getGuarantor());
-//        System.out.println(loanRequest.getIncome());
-//        System.out.println(loanRequest.getPledge());
-//        loanRequstRepository.save(loanRequest);
-//        return null;
-//    }
-//
-//    @JsonView(View.SUMMARY.class)
-//    @RequestMapping(value="/loans", method = RequestMethod.GET)
-//    public Iterable<LoanRequest> getAllUsers(){
-//
-//        return loanRequstRepository.findAll();
-//    }
 
 
 

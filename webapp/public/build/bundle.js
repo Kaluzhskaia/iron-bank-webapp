@@ -2554,7 +2554,7 @@
 	      }
 
 	      // User is trying to bind() an autobound method; we effectively will
-	      // ignore the value of "this" that the user is trying to use, so
+	      // ignore the value of "this" that the client is trying to use, so
 	      // let's warn.
 	      if (newThis !== component && newThis !== null) {
 	        process.env.NODE_ENV !== 'production' ? warning(false, 'bind(): React component methods may only be bound to the ' + 'component instance. See %s', componentName) : void 0;
@@ -7438,7 +7438,7 @@
 
 	/**
 	 * (For IE <=11) Starts tracking propertychange events on the passed-in element
-	 * and override the value property so that we can distinguish user events from
+	 * and override the value property so that we can distinguish client events from
 	 * value changes in JS.
 	 */
 	function startWatchingForValueChange(target, targetInst) {
@@ -7541,7 +7541,7 @@
 	    // propertychange on the first input event after setting `value` from a
 	    // script and fires only keydown, keypress, keyup. Catching keyup usually
 	    // gets it and catching keydown lets us fire an event for the first
-	    // keystroke if user does a key repeat (it'll be a little delayed: right
+	    // keystroke if client does a key repeat (it'll be a little delayed: right
 	    // before the second keystroke). Other input methods (e.g., paste) seem to
 	    // fire selectionchange normally.
 	    if (activeElement && activeElement.value !== activeElementValue) {
@@ -12576,7 +12576,7 @@
 	function dangerousStyleValue(name, value, component) {
 	  // Note that we've removed escapeTextForBrowser() calls here since the
 	  // whole string will be escaped when the attribute is injected into
-	  // the markup. If you provide unsafe user data here they can inject
+	  // the markup. If you provide unsafe client data here they can inject
 	  // arbitrary CSS which may be problematic (I couldn't repro this):
 	  // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
 	  // http://www.thespanner.co.uk/2007/11/26/ultimate-xss-css-injection/
@@ -13535,7 +13535,7 @@
 	 * Implements an <input> host component that allows setting these optional
 	 * props: `checked`, `value`, `defaultChecked`, and `defaultValue`.
 	 *
-	 * If `checked` or `value` are not supplied (or null/undefined), user actions
+	 * If `checked` or `value` are not supplied (or null/undefined), client actions
 	 * that affect the checked state or value will trigger updates to the element.
 	 *
 	 * If they are supplied (and not null/undefined), the rendered element will not
@@ -13653,7 +13653,7 @@
 	        // Chrome raises "The specified value <x> is not a valid username address".
 	        //
 	        // Here we check to see if the defaultValue has actually changed, avoiding these problems
-	        // when the user is inputting text
+	        // when the client is inputting text
 	        //
 	        // https://github.com/facebook/react/issues/7253
 	        if (node.defaultValue !== '' + props.defaultValue) {
@@ -14178,11 +14178,11 @@
 	 * props `value` and `defaultValue`. If `multiple` is false, the prop must be a
 	 * stringable. If `multiple` is true, the prop must be an array of stringables.
 	 *
-	 * If `value` is not supplied (or null/undefined), user actions that change the
+	 * If `value` is not supplied (or null/undefined), client actions that change the
 	 * selected option will trigger updates to the rendered options.
 	 *
 	 * If it is supplied (and not null/undefined), the rendered options will not
-	 * update in response to user actions. Instead, the `value` prop must change in
+	 * update in response to client actions. Instead, the `value` prop must change in
 	 * order for the rendered options to update.
 	 *
 	 * If `defaultValue` is provided, any options with the supplied values will be
@@ -14303,7 +14303,7 @@
 	 * `defaultValue`. This differs from the traditional DOM API because value is
 	 * usually set as PCDATA children.
 	 *
-	 * If `value` is not supplied (or null/undefined), user actions that affect the
+	 * If `value` is not supplied (or null/undefined), client actions that affect the
 	 * value will trigger updates to the element.
 	 *
 	 * If `value` is supplied (and not null/undefined), the rendered element will
@@ -14952,7 +14952,7 @@
 	/**
 	 * `ReactInstanceMap` maintains a mapping from a public facing stateful
 	 * instance (key) and the internal representation (value). This allows public
-	 * methods to accept the user facing instance as an argument and map them back
+	 * methods to accept the client facing instance as an argument and map them back
 	 * to internal methods.
 	 */
 
@@ -15190,7 +15190,7 @@
 	}
 
 	/**
-	 * Check if the type reference is a known internal type. I.e. not a user
+	 * Check if the type reference is a known internal type. I.e. not a client
 	 * provided composite type.
 	 *
 	 * @param {function} type
@@ -15720,7 +15720,7 @@
 	    this._topLevelWrapper = null;
 
 	    // Delete the reference from the instance to this internal representation
-	    // which allow the internals to be properly cleaned up even if the user
+	    // which allow the internals to be properly cleaned up even if the client
 	    // leaks a reference to the public instance.
 	    ReactInstanceMap.remove(inst);
 
@@ -19012,7 +19012,7 @@
 	  var selectedRange = selection.createRange();
 	  var selectedLength = selectedRange.text.length;
 
-	  // Duplicate selection so we can move range without breaking user selection.
+	  // Duplicate selection so we can move range without breaking client selection.
 	  var fromStart = selectedRange.duplicate();
 	  fromStart.moveToElementText(node);
 	  fromStart.setEndPoint('EndToStart', selectedRange);
@@ -19797,7 +19797,7 @@
 	 * @return {?SyntheticEvent}
 	 */
 	function constructSelectEvent(nativeEvent, nativeEventTarget) {
-	  // Ensure we have the right element, and that the user is not dragging a
+	  // Ensure we have the right element, and that the client is not dragging a
 	  // selection (this matches native `select` event behavior). In HTML5, select
 	  // fires only on input and textarea thus if there's no focused element we
 	  // won't dispatch.
@@ -19835,7 +19835,7 @@
 	 * This differs from native browser implementations in the following ways:
 	 * - Fires on contentEditable fields as well as inputs.
 	 * - Fires for collapsed selection.
-	 * - Fires after user input.
+	 * - Fires after client input.
 	 */
 	var SelectEventPlugin = {
 
@@ -19863,7 +19863,7 @@
 	        lastSelection = null;
 	        break;
 
-	      // Don't fire the event while the user is dragging. This matches the
+	      // Don't fire the event while the client is dragging. This matches the
 	      // semantics of the native select event.
 	      case 'topMouseDown':
 	        mouseDown = true;
@@ -20317,7 +20317,7 @@
 	    // The actual meaning of the value depends on the users' keyboard layout
 	    // which cannot be detected. Assuming that it is a US keyboard layout
 	    // provides a surprisingly accurate mapping for US and European users.
-	    // Due to this, it is left to the user to implement at this time.
+	    // Due to this, it is left to the client to implement at this time.
 	    if (event.type === 'keydown' || event.type === 'keyup') {
 	      return event.keyCode;
 	    }
@@ -20501,7 +20501,7 @@
 	    return charCode === 13 ? 'Enter' : String.fromCharCode(charCode);
 	  }
 	  if (nativeEvent.type === 'keydown' || nativeEvent.type === 'keyup') {
-	    // While user keyboard layout determines the actual meaning of each
+	    // While client keyboard layout determines the actual meaning of each
 	    // `keyCode` value, almost all function keys have a universal value.
 	    return translateToKey[nativeEvent.keyCode] || 'Unidentified';
 	  }
@@ -21609,8 +21609,8 @@
 	      process.env.NODE_ENV !== 'production' ? warning(false, 'Unknown event handler property %s. Did you mean `%s`?%s', name, registrationName, ReactComponentTreeHook.getStackAddendumByID(debugID)) : void 0;
 	      return true;
 	    } else {
-	      // We were unable to guess which prop the user intended.
-	      // It is likely that the user was just blindly spreading/forwarding props
+	      // We were unable to guess which prop the client intended.
+	      // It is likely that the client was just blindly spreading/forwarding props
 	      // Components should be careful to only render valid props/attributes.
 	      // Warning will be invoked in warnUnknownProperties to allow grouping.
 	      return false;
@@ -24612,7 +24612,7 @@
 	      var result = void 0;
 	      for (var i = 0, len = hooks.length; result == null && i < len; ++i) {
 	        // Passing the location arg here indicates to
-	        // the user that this is a transition hook.
+	        // the client that this is a transition hook.
 	        result = hooks[i](location);
 	      }
 
@@ -24629,7 +24629,7 @@
 
 	      var message = void 0;
 	      for (var i = 0, len = hooks.length; typeof message !== 'string' && i < len; ++i) {
-	        // Passing no args indicates to the user that this is a
+	        // Passing no args indicates to the client that this is a
 	        // beforeunload hook. We don't know the next location.
 	        message = hooks[i]();
 	      }
@@ -24667,7 +24667,7 @@
 	   * Registers the given hook function to run before leaving the given route.
 	   *
 	   * During a normal transition, the hook function receives the next location
-	   * as its only argument and can return either a prompt message (string) to show the user,
+	   * as its only argument and can return either a prompt message (string) to show the client,
 	   * to make sure they want to leave the page; or `false`, to prevent the transition.
 	   * Any other return value will have no effect.
 	   *
@@ -25964,7 +25964,7 @@
 
 
 	    if (router) {
-	      // If user does not specify a `to` prop, return an empty anchor tag.
+	      // If client does not specify a `to` prop, return an empty anchor tag.
 	      if (to == null) {
 	        return _react2.default.createElement('a', props);
 	      }
@@ -26521,18 +26521,18 @@
 
 	/**
 	 * The Lifecycle mixin adds the routerWillLeave lifecycle method to a
-	 * component that may be used to cancel a transition or prompt the user
+	 * component that may be used to cancel a transition or prompt the client
 	 * for confirmation.
 	 *
 	 * On standard transitions, routerWillLeave receives a single argument: the
 	 * location we're transitioning to. To cancel the transition, return false.
-	 * To prompt the user for confirmation, return a prompt message (string).
+	 * To prompt the client for confirmation, return a prompt message (string).
 	 *
 	 * During the beforeunload event (assuming you're using the useBeforeUnload
 	 * history enhancer), routerWillLeave does not receive a location object
 	 * because it isn't possible for us to know the location we're transitioning
 	 * to. In this case routerWillLeave must return a prompt message to prevent
-	 * the user from closing the window/tab.
+	 * the client from closing the window/tab.
 	 */
 
 	var Lifecycle = {
@@ -29732,7 +29732,7 @@
 
 	        return _react2['default'].createElement(
 	            'div',
-	            { className: 'user-info' },
+	            { className: 'client-info' },
 	            _react2['default'].createElement(_UserPersonalInfoJs2['default'], {
 	                firstName: this.props.firstName,
 	                lastName: this.props.lastName,
@@ -31255,7 +31255,7 @@
 	exports.PATH_AUTH = PATH_AUTH;
 	var PATH_LOGOUT = SERVER_HOST + "/signout";
 	exports.PATH_LOGOUT = PATH_LOGOUT;
-	var PATH_API_USER = SERVER_HOST + "/api/user/";
+	var PATH_API_USER = SERVER_HOST + "/api/client/";
 	exports.PATH_API_USER = PATH_API_USER;
 	var PATH_API_USERS = SERVER_HOST + "/api/users";
 	exports.PATH_API_USERS = PATH_API_USERS;
@@ -31375,11 +31375,11 @@
 
 	    return _react2['default'].createElement(
 	      'div',
-	      { className: 'user-personal-info' },
+	      { className: 'client-personal-info' },
 	      _react2['default'].createElement(
 	        'div',
-	        { className: 'user-personal-image-div' },
-	        _react2['default'].createElement('img', { className: 'user-personal-image', src: _pathsJs.IMAGE_PATH + imagePath, onLoad: this.changeSize, onChange: this.changeSize })
+	        { className: 'client-personal-image-div' },
+	        _react2['default'].createElement('img', { className: 'client-personal-image', src: _pathsJs.IMAGE_PATH + imagePath, onLoad: this.changeSize, onChange: this.changeSize })
 	      ),
 	      _react2['default'].createElement(
 	        'div',
@@ -34835,8 +34835,8 @@
 
 	    _this.handleTouchStart = function (event) {
 	      event.stopPropagation();
-	      // If the user is swiping (not just tapping), save the position so we can
-	      // abort ripples if the user appears to be scrolling.
+	      // If the client is swiping (not just tapping), save the position so we can
+	      // abort ripples if the client appears to be scrolling.
 	      if (_this.props.abortOnScroll && event.touches) {
 	        _this.startListeningForScrollAbort(event);
 	        _this.startTime = Date.now();
@@ -34856,7 +34856,7 @@
 	        return;
 	      }
 
-	      // If the user is scrolling...
+	      // If the client is scrolling...
 	      var deltaY = Math.abs(event.touches[0].clientY - _this.firstTouchY);
 	      var deltaX = Math.abs(event.touches[0].clientX - _this.firstTouchX);
 	      // Call it a scroll after an arbitrary 6px (feels reasonable in testing)
@@ -34929,7 +34929,7 @@
 	      }
 	    }
 
-	    // Check if the user seems to be scrolling and abort the animation if so
+	    // Check if the client seems to be scrolling and abort the animation if so
 
 	  }, {
 	    key: 'startListeningForScrollAbort',
@@ -37494,7 +37494,7 @@
 	      if (focusedMenuItem) {
 	        var selectedOffSet = _reactDom2.default.findDOMNode(focusedMenuItem).offsetTop;
 
-	        // Make the focused item be the 2nd item in the list the user sees
+	        // Make the focused item be the 2nd item in the list the client sees
 	        var scrollTop = selectedOffSet - menuItemHeight;
 	        if (scrollTop < menuItemHeight) scrollTop = 0;
 
@@ -43501,7 +43501,7 @@
 	    // Disabled autoprefixer
 	    return null;
 	  } else if (userAgent === 'all' || userAgent === undefined) {
-	    // Prefix for all user agent
+	    // Prefix for all client agent
 	    return function (style) {
 	      var isFlex = ['flex', 'inline-flex'].indexOf(style.display) !== -1;
 	      var stylePrefixed = _inlineStylePrefixer2.default.prefixAll(style);
@@ -44782,7 +44782,7 @@
 	      result = {
 	        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
 	      }
-	      // WTF: version is not part of user agent in web apps
+	      // WTF: version is not part of client agent in web apps
 	      if (versionIdentifier) {
 	        result.version = versionIdentifier
 	      }
@@ -45016,7 +45016,7 @@
 	   *
 	   * @param  {Object}  minVersions map of minimal version to browser
 	   * @param  {Boolean} [strictMode = false] flag to return false if browser wasn't found in map
-	   * @param  {String}  [ua] user agent string
+	   * @param  {String}  [ua] client agent string
 	   * @return {Boolean}
 	   */
 	  function isUnsupportedBrowser(minVersions, strictMode, ua) {
@@ -45057,7 +45057,7 @@
 	   *
 	   * @param  {Object} minVersions map of minimal version to browser
 	   * @param  {Boolean} [strictMode = false] flag to return false if browser wasn't found in map
-	   * @param  {String}  [ua] user agent string
+	   * @param  {String}  [ua] client agent string
 	   * @return {Boolean}
 	   */
 	  function check(minVersions, strictMode, ua) {
@@ -45070,7 +45070,7 @@
 
 	  /*
 	   * Set our detect method to the main bowser object so we can
-	   * reuse it to test other user agents.
+	   * reuse it to test other client agents.
 	   * This is needed to implement future tests.
 	   */
 	  bowser._detect = detect;

@@ -17,14 +17,17 @@ const Home = React.createClass({
 
         roles = localStorage.getItem(ROLES);
 
+        if (roles)
             if (roles.includes("ROLE_ADMIN"))
                 return <AdminHome/>;
             else if (roles.includes("ROLE_MANAGER"))
                 return <ManagerHome/>;
             else if (roles.includes("ROLE_COLLECTOR"))
                 return <CollectorHome/>;
-            else
+            else if (roles.includes("ROLE_CLIENT"))
                 return <LoanRequest/>;
+            else
+                return <div>Can not identify user authorities</div>
     }
 });
 

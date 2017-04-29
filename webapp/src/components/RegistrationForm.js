@@ -30,7 +30,7 @@ var fieldValues = {
 const RegistrationForm = React.createClass({
 
     singUp: function(){
-        axios.post(PATH_REGISTRATION+'/new-user',
+        axios.post(PATH_REGISTRATION+'/new-client',
             {
                 username  : fieldValues.username,
                 email     : fieldValues.email,

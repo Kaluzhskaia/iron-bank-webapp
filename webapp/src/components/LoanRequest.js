@@ -8,15 +8,15 @@ import {browserHistory} from 'react-router';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
-import {PATH_REGISTRATION} from "../constants";
+import {PATH_API_LOAN_REQUEST} from "../constants";
+import {createAuthorizationTokenHeader} from '../utils.js'
 
 const styles = {
     customWidth: {
         width: 250,
     },
     formWidth: {
-        width: 400,
-        height: 430
+        width: 400
     },
 };
 
@@ -35,6 +35,7 @@ const LoanRequest = React.createClass({
             pledge         : '',
             income         : '',
             amountErrorText: '',
+            incomeError    : '',
             errorText      : '',
             submitEnabled  : false
         }
@@ -44,6 +45,7 @@ const LoanRequest = React.createClass({
         if (e.target.name == "amount") {
             if (regExpAmount.test(e.target.value)) {
                 this.setState({amount: e.target.value});
+                this.setState({amountErrorText: ''})
             }
             else {
                 this.setState({amountErrorText: "Только циферки, дружище"})
@@ -60,7 +62,12 @@ const LoanRequest = React.createClass({
             this.setState({pledge : e.target.value});
         }
         if (e.target.name == "income") {
-            this.setState({income: e.target.value});
+            if (regExpAmount.test(e.target.value)) {
+                this.setState({income: e.target.value});
+                this.setState({incomeError: ''})
+            }
+            else
+                this.setState({incomeError: "Только циферки, дружище"})
         }
     },
 
@@ -72,20 +79,25 @@ const LoanRequest = React.createClass({
             this.state.purpose != '' &&
             this.state.guarantor != '' &&
             this.state.pledge != '' &&
-            this.state.income != '')
+            this.state.income != '' &&
+            this.state.incomeError == '' &&
+            this.state.amountErrorText == '')
         {
             this.setState({errorText: ''});
-            axios.post(PATH_REGISTRATION + '/loan',
-                {
-                    amount: this.state.amount,
-                    purpose: this.state.purpose,
-                    guarantor: this.state.guarantor,
-                    pledge: this.state.pledge,
-                    income: this.state.income
+            axios({ method: 'post',
+                    url: PATH_API_LOAN_REQUEST,
+                    headers: createAuthorizationTokenHeader(),
+                    data: {
+                        amount: this.state.amount,
+                        purpose: this.state.purpose,
+                        guarantor: this.state.guarantor,
+                        pledge: this.state.pledge,
+                        income: this.state.income
+                    },
                 });
         }
         else {
-            this.setState({errorText: 'Все поля должны быть заполнены'})
+            this.setState({errorText: 'Все поля должны быть корректно заполнены'})
         }
     },
 
@@ -94,36 +106,40 @@ const LoanRequest = React.createClass({
             <div className="home-page">
                 <p> Кредит возьмите,<br/>Но затем верните
                 </p>
-                <div className="loan-request-form">
-                    <Paper zDepth={2}
-                            style={styles.formWidth}>
-                        <div>
-
-                        <div style={{marginTop: '10px'}}>Сумма (в железных монетах):</div>
-                        <div><TextField name='amount' errorText={this.state.amountErrorText} onChange={this.handleOnChange}/></div>
-                        <div>Цель:</div>
-                        <div><TextField name='purpose' onChange={this.handleOnChange}/></div>
-                        <div>Поручитель:</div>
-                        <div><TextField name='guarantor' onChange={this.handleOnChange}/></div>
-                        <div>Залог:</div>
-                        <div><TextField name='pledge' onChange={this.handleOnChange}/></div>
-                        <div>Доход</div>
-                        <div><TextField name='income' onChange={this.handleOnChange}/></div>
-
-                        <div className="error-message">{this.state.errorText}</div>
-
-                        <RaisedButton
-                            name='nextStep'
-                            primary={true}
-                            style={{width: '200px', marginTop: '40px'}}
-                            label="Подать заявку"
-                            onTouchTap={this.handleOnClick}
-                            disabled={this.state.submitEnabled}
+                <Paper zDepth={2}
+                       style={styles.formWidth}>
+                    <form>
+                        <TextField name='amount' errorText={this.state.amountErrorText} onChange={this.handleOnChange}
+                                   hintText="Сумма (в железных монетах):"
+                                   style={{width: '360px', margin: '20px', marginTop: '15px'}} />
+                        <TextField name='purpose' onChange={this.handleOnChange}
+                                   hintText="Цель:"
+                                   style={{width: '360px', margin: '20px', marginBottom: '30px', marginTop: '0px'}}
                         />
-
+                        <TextField name='guarantor' onChange={this.handleOnChange}
+                                   hintText="Поручитель:"
+                                   style={{width: '360px', margin: '20px', marginBottom: '30px', marginTop: '0px'}}
+                        />
+                        <TextField name='pledge' onChange={this.handleOnChange}
+                                   hintText="Залог:"
+                                   style={{width: '360px', margin: '20px', marginBottom: '30px', marginTop: '0px'}}
+                        />
+                        <TextField name='income' errorText={this.state.incomeError} onChange={this.handleOnChange}
+                                   hintText="Доход"
+                                   style={{width: '360px', margin: '20px', marginBottom: '30px', marginTop: '0px'}}
+                        />
+                        <div className="error-message">{this.state.errorText}</div>
+                        <div>
+                            <RaisedButton
+                                name='nextStep'
+                                primary={true}
+                                label="Подать заявку"
+                                onTouchTap={this.handleOnClick}
+                                style={{width: '100%', marginTop: '30px'}}
+                            />
                         </div>
-                    </Paper>
-                </div>
+                    </form>
+                </Paper>
             </div>
         );
     }
