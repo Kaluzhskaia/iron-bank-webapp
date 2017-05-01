@@ -7,7 +7,6 @@ export const PATH_API_USER = SERVER_HOST + "/api/client";
 export const PATH_REGISTRATION = SERVER_HOST + "/registration";
 export const IMAGE_PATH = SERVER_HOST + "/images/";
 export const PATH_API_LOAN_REQUEST = SERVER_HOST + "/api/loan-request";
-export const PATH_API_NEW_LOAN_REQUESTS_LIST = PATH_API_LOAN_REQUEST + "/new";
 
 //constants
 export const TOKEN = "token";

@@ -3,9 +3,7 @@
  */
 import React from 'react';
 
-import RequestGrid from './RequestsGrid'
-
-
+import ManagerLoanRequests from './ManagerLoanRequests'
 
 
 const ManagerHome = React.createClass({
@@ -16,7 +14,7 @@ const ManagerHome = React.createClass({
 
     render: function () {
         return (
-            <RequestGrid/>
+            <ManagerLoanRequests/>
         );
     }
 });

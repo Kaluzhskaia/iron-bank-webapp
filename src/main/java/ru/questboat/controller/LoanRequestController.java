@@ -1,24 +1,15 @@
 package ru.questboat.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import ru.questboat.model.LoanRequest;
-import ru.questboat.model.LoanRequestStatus;
-import ru.questboat.model.User;
-import ru.questboat.model.View;
-import ru.questboat.repository.LoanRequestRepository;
 import ru.questboat.service.LoanRequestManager;
 import ru.questboat.service.UserManager;
 import ru.questboat.service.jwt.JwtTokenUtil;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 /**
@@ -30,7 +21,7 @@ import java.util.List;
 public class LoanRequestController {
 
     @Autowired
-    LoanRequestManager loanRequestManager;
+    private LoanRequestManager loanRequestManager;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -52,13 +43,21 @@ public class LoanRequestController {
         }
     }
 
-    @Autowired
-    LoanRequestRepository loanRequestRepository;
-
 //    @JsonView(View.Summary.class)
-    @RequestMapping(value = "/loan-request/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/loan-request", method = RequestMethod.GET)
     public List getAllNewLoanRequests(){
-        return loanRequestRepository.findByLoanRequestStatus(LoanRequestStatus.NOT_REVIEWED);
+
+        System.out.println("Get new list");
+        return loanRequestManager.findAll();
+    }
+
+    @RequestMapping(value = "/loan-request/{id}/{newStatus}", method = RequestMethod.GET)
+    public ResponseEntity changeLoanRequestStatus(@PathVariable String newStatus, @PathVariable long id){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        if (loanRequestManager.changeLoanStatus(id, newStatus))
+            status = HttpStatus.OK;
+        System.out.println("Refresh status");
+        return new ResponseEntity(null, status);
     }
 
 }

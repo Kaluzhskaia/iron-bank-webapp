@@ -49,7 +49,7 @@ const MainLayout = React.createClass({
             }).then(response => {
                 this.setState({
                     userInfo: response.data
-                });
+                }                );
             }).catch(
                 this.setState({
                 userInfo: {firstName: "Can not get name"}
