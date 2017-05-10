@@ -187,7 +187,7 @@ a{
 /*-------ГЛАВНАЯ ПАНЕЛЬ-------*/
 .left-panel{
 
-	width: 400px;
+	width: 350px;
 	/*height: 100vh;*/
 	min-height: 100vh;
 	padding-bottom: 60px;
@@ -196,7 +196,7 @@ a{
 	background-color: #00ACC1 !important;
 	float: left;
 	color: white;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left: 0px;
 
@@ -304,12 +304,10 @@ a{
 }
 
 .bottom-navigation{
-	width: 400px !important;
+	width: 350px !important;
 	background-color: rgba(208, 219, 224, 0.48) !important;
 }
-.bottom-navigation button{
-	width: 200px !important;
-}
+
 
 .center-panel{
 

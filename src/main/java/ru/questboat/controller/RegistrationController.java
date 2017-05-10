@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ru.questboat.model.Authority;
+import ru.questboat.model.AuthorityName;
 import ru.questboat.model.User;
+import ru.questboat.repository.AuthorityRepository;
 import ru.questboat.service.UserManager;
 
 import javax.mail.MessagingException;
@@ -34,6 +37,9 @@ public class RegistrationController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
     @RequestMapping(value = "/check-email-and-username", method = RequestMethod.POST)
     public ResponseEntity<?> isEmail(@RequestBody User muser){
         User user = userManager.findByUsernameOrEmail(muser.getEmail(), muser.getUsername());
@@ -45,7 +51,7 @@ public class RegistrationController {
         }
     }
 
-    @RequestMapping(value = "/new-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/new-client", method = RequestMethod.POST)
     public User addUser(@RequestBody User user){
         System.out.println(user.getPassword());
         System.out.println(passwordEncoder.encode(user.getPassword()));
@@ -53,6 +59,11 @@ public class RegistrationController {
         user.setImagePath(IMAGE_PATH);
         user.setEnabled(true);
         user.setLastPasswordResetDate(new Date(System.currentTimeMillis()));
+        Authority authorityClint = authorityRepository.findByName(AuthorityName.ROLE_CLIENT);
+        authorityClint.setName(AuthorityName.ROLE_CLIENT);
+        List<Authority> authoritiesList = new ArrayList<>();
+        authoritiesList.add(authorityClint);
+        user.setAuthorities(authoritiesList);
         return userManager.save(user);
     }
 

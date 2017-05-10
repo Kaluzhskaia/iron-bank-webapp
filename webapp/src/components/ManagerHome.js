@@ -7,10 +7,6 @@ import ManagerLoanRequests from './ManagerLoanRequests'
 
 
 const ManagerHome = React.createClass({
-    getInitialState: function() {
-        return {
-        }
-    },
 
     render: function () {
         return (

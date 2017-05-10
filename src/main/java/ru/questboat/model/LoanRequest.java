@@ -30,7 +30,7 @@ public class LoanRequest {
 
     @NotNull
     @JsonView(View.Summary.class)
-    private String amount;
+    private long amount;
 
     @NotNull
     @JsonView(View.Summary.class)
@@ -46,7 +46,7 @@ public class LoanRequest {
 
     @NotNull
     @JsonView(View.Summary.class)
-    private String income;
+    private long income;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -55,7 +55,7 @@ public class LoanRequest {
 
     @OneToOne
     @JsonView(View.Summary.class)
-    private User manger;
+    private User manager;
 
     @JsonView(View.Summary.class)
     private Date requestTime;

@@ -84,10 +84,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+//                полная вседозволенность
+                .antMatchers("/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/api/loan-request").hasRole("CLIENT")
-                .antMatchers("/api/loan-request/**").hasRole("MANAGER")
+                .antMatchers("/api/loan-request/**").hasAnyRole("CLIENT", "MANAGER")
                 .antMatchers("/api/loan-request").permitAll()
                 .anyRequest().authenticated();
 

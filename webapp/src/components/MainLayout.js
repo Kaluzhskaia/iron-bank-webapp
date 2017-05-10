@@ -13,9 +13,9 @@ import FontIcon from 'material-ui/FontIcon';
 const GroupIcon = <FontIcon className="material-icons">group</FontIcon>;
 const EmailIcon = <FontIcon className="material-icons">face</FontIcon>;
 import {browserHistory} from 'react-router';
-import {PATH_API_USER} from '../constants.js';
+import {PATH_API_USER, ROLES} from '../constants.js';
 import axios from 'axios';
-import {getImagePath, createAuthorizationTokenHeader} from '../utils.js'
+import {createAuthorizationTokenHeader} from '../utils.js'
 
 
 const muiTheme = getMuiTheme({});
@@ -44,7 +44,7 @@ const MainLayout = React.createClass({
             browserHistory.push('login')
         } else{
             //browserHistory.push('/chats');
-            axios.get("http://localhost:8080/api/user", {
+            axios.get(PATH_API_USER, {
                 headers: createAuthorizationTokenHeader()
             }).then(response => {
                 this.setState({
@@ -86,18 +86,107 @@ const MainLayout = React.createClass({
         }
         return child;
     },
+
+
     render: function () {
+
+        const roles = localStorage.getItem(ROLES);
+
+        var menuItems = [];
+
+        if (roles)
+            if (roles.includes("ROLE_ADMIN"))
+                menuItems = [
+                    {
+                        id: 1,
+                        linkTo:  "/",
+                        label: "Админ",
+                        icon: GroupIcon
+                    },
+                    {
+                        id: 2,
+                        linkTo:  "/",
+                        label: "Админ2",
+                        icon: GroupIcon
+                    }
+                ];
+            else if (roles.includes("ROLE_MANAGER"))
+                menuItems = [
+                    {
+                        id: 1,
+                        linkTo:  "/",
+                        label: "Заявки",
+                        icon: GroupIcon
+                    },
+                    {
+                        id: 2,
+                        linkTo:  "/",
+                        label: "Кредиты",
+                        icon: GroupIcon
+                    },
+                    {
+                        id: 3,
+                        linkTo:  "/manager-collector",
+                        label: "Коллекторы",
+                        icon: GroupIcon
+                    }
+                ];
+            else if (roles.includes("ROLE_COLLECTOR"))
+                rmenuItems = [
+                    {
+                        id: 1,
+                        linkTo:  "/",
+                        label: "Коллектор",
+                        icon: GroupIcon
+                    },
+                    {
+                        id: 2,
+                        linkTo:  "/",
+                        label: "Коллектор2",
+                        icon: GroupIcon
+                    }
+                ];
+            else if (roles.includes("ROLE_CLIENT"))
+                menuItems = [
+                    {
+                        id: 1,
+                        linkTo:  "/",
+                        label: "Подать завявку",
+                        icon: GroupIcon
+                    },
+                    {
+                        id: 2,
+                        linkTo:  "/my-requests",
+                        label: "Заявки",
+                        icon: GroupIcon
+                    },
+                    {
+                        id: 3,
+                        linkTo:  "/my-loans",
+                        label: "Кредит",
+                        icon: GroupIcon
+                    }
+                ];
+            else
+                menuItems =  [];
+
+            const menu = menuItems ?
+                menuItems.map(menuItem=><Link to={menuItem.linkTo} key={menuItem.id}>
+                                            <BottomNavigationItem
+                                            label={menuItem.label}
+                                            icon={menuItem.icon}/>
+                                        </Link>)
+                :<div/>;
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
 
                  <Paper className="app" zDepth={0}>
 
                     <Paper zDepth={0} className="center-panel">
-                        {this.renderChild()}
+                        {this.props.children}
                     </Paper>
 
 
-                    <div style={{width:400, height: '100%', position:'fixed', backgroundColor:'#00ACC1', bottom:0, left:0, zIndex:0}}></div>
                      <Paper className="left-panel" zDepth={0}>
 
                         <Logo />
@@ -112,21 +201,14 @@ const MainLayout = React.createClass({
                           skills = {this.state.userInfo.skills}
                           wish = {this.state.userInfo.wish}
                         />
-                        <div className="test-ul">
-                            <BottomNavigation className="bottom-navigation">
-                                <Link to="/">
-                                    <BottomNavigationItem
-                                        label="Клиент"
-                                        icon={GroupIcon}/>
-                                </Link>
-                                <Link to="/manager">
-                                    <BottomNavigationItem
-                                        label="Менеджер"
-                                        icon={EmailIcon}/>
-                                </Link>
-                            </BottomNavigation>
 
-                        </div>
+                         <div className="test-ul">
+                             <BottomNavigation className="bottom-navigation">
+                                 {menu}
+                             </BottomNavigation>
+
+                         </div>
+
                     </Paper>
 
                 </Paper>

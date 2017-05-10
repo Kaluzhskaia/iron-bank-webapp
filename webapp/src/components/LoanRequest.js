@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
-import {PATH_API_LOAN_REQUEST} from '../constants';
+import {PATH_API_LOAN_REQUEST,ROLES} from '../constants';
 import {createAuthorizationTokenHeader} from '../utils.js';
 
 const style = {
@@ -17,8 +17,6 @@ const style = {
 };
 
 const LoanRequest = React.createClass({
-
-
 
     handleStatusApprove(e){
         this.statusChange("approve")
@@ -43,24 +41,40 @@ const LoanRequest = React.createClass({
         var statusStyle = {};
         var status;
         var newRequestButtonDisplay = "none";
-        var approvedRequestButtonDispaly = "none";
+        var issueButtonDisplay = "none";
+        var managerName = this.props.loanRequest.manager ? (this.props.loanRequest.manager.firstName + " " + this.props.loanRequest.manager.lastName) : "" ;
+        var managerDisplay = "table-row";
+        const roles = localStorage.getItem(ROLES);
 
-        switch (this.props.loanRequest.loanRequestStatus){
-            case "NOT_REVIEWED":
-                status = "Новая";
-                statusStyle = {color: 'blue'};
+
+            switch (this.props.loanRequest.loanRequestStatus) {
+                case "NOT_REVIEWED":
+                    status = "Новая";
+                    statusStyle = {color: 'blue'};
+                    managerDisplay = "none";
+                    break;
+                case "APPROVED" :
+                    statusStyle = {color: 'green'};
+                    status = "Одобрена";
+                    break;
+                case "REJECTED" :
+                    statusStyle = {color: 'red'};
+                    status = "Отклонена";
+                    break;
+                case "LOAN_ISSUED" :
+                    statusStyle = {color: 'gray'};
+                    status = "Кредит выдан";
+                    break;
+            }
+        if (roles.includes("ROLE_MANAGER")) {
+            if (this.props.loanRequest.loanRequestStatus == "NOT_REVIEWED") {
                 newRequestButtonDisplay = "inline-block";
-                break;
-            case "APPROVED" :
-                newRequestButtonDisplay = "none";
-                statusStyle = {color: 'green'};
-                status = "Одобрена";
-                break;
-            case "REJECTED" :
-                newRequestButtonDisplay = "none";
-                statusStyle = {color: 'red'};
-                status = "Отклонена";
-                break;
+            }
+        }
+        else if (roles.includes("ROLE_CLIENT")){
+            if (this.props.loanRequest.loanRequestStatus == "APPROVED"){
+            issueButtonDisplay = "inline-block";
+            }
         }
 
         return(
@@ -101,13 +115,17 @@ const LoanRequest = React.createClass({
                             <TableRowColumn>Стаус</TableRowColumn>
                             <TableRowColumn style={statusStyle}><span >{status}</span></TableRowColumn>
                         </TableRow>
+                        <TableRow style={{display: managerDisplay}}>
+                            <TableRowColumn>Менеджер</TableRowColumn>
+                            <TableRowColumn>{managerName}</TableRowColumn>
+                        </TableRow>
                     </TableBody>
                 </Table>
 
                 <RaisedButton name="approved" ref="approved" label="Одобрить" primary={true} style={{width: "33.33%", display: newRequestButtonDisplay}} onTouchTap={this.handleStatusApprove}/>
                 <RaisedButton name="rejected" label="Отказать" secondary={true} style={{width: "33.33%", display: newRequestButtonDisplay}}  onTouchTap={this.handleStatusReject}/>
                 <RaisedButton name="helpButton" label="Помощник"  style={{width: "33.33%", display: newRequestButtonDisplay}}  />
-                <RaisedButton name="label-issued" label="Кредит выдан" style={{width: "33.33%", display: newRequestButtonDisplay}}  onTouchTap={this.handleStatusIssue}/>
+                <RaisedButton name="label-issued" label="Получить кредит" style={{width: "100%", display: issueButtonDisplay}}  onTouchTap={this.handleStatusIssue}/>
             </Paper>
         )},
 });

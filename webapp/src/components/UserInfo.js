@@ -31,7 +31,6 @@ const UserInfo = React.createClass({
                             targetOrigin={{horizontal: 'left', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                         >
-                            <MenuItem primaryText="Редактировать" containerElement={<Link to='/edit' />} />
                             <MenuItem primaryText="Выйти из системы" onTouchTap={this.handleTouchTap} containerElement={<Link to='/login' />} />
                         </IconMenu>
                     </div>;

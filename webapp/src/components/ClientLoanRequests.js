@@ -1,10 +1,10 @@
 /**
- * Created by Mikhail Falaleev on 30.04.2017.
+ * Created by Mikhail Falaleev on 07.05.2017.
  */
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import RequestGrid from './RequestsGrid';
-import {PATH_API_LOAN_REQUEST} from '../constants';
+import {PATH_API_LOAN_REQUEST_MINE} from '../constants';
 import {createAuthorizationTokenHeader} from '../utils.js';
 import axios from 'axios';
 
@@ -21,10 +21,10 @@ const styles = {
     },
 };
 
-const ManagerLoanRequests = React.createClass({
+const ClientLoanRequests = React.createClass({
 
     componentWillMount(){
-        axios.get(PATH_API_LOAN_REQUEST, {
+        axios.get(PATH_API_LOAN_REQUEST_MINE, {
             headers: createAuthorizationTokenHeader()
         }).then(response => {
             this.setState({
@@ -35,7 +35,7 @@ const ManagerLoanRequests = React.createClass({
     },
 
     shouldUpdate(){
-        axios.get(PATH_API_LOAN_REQUEST, {
+        axios.get(PATH_API_LOAN_REQUEST_MINE, {
             headers: createAuthorizationTokenHeader()
         }).then(response => {
             this.setState({
@@ -58,8 +58,8 @@ const ManagerLoanRequests = React.createClass({
         return (
             <div>
                 <Tabs>
-                    <Tab label="Новые" >
-                        <RequestGrid shouldUpdate={this.shouldUpdate} requestsList={this.state.requestsList.filter((req)=>req.loanRequestStatus === "NOT_REVIEWED")}/>
+                    <Tab label="Мои заявки" >
+                        <RequestGrid shouldUpdate={this.shouldUpdate} requestsList={this.state.requestsList.filter((req)=>req.loanRequestStatus !== "LOAN_ISSUED")}/>
                     </Tab>
                     <Tab label="Одобренные"  >
                         <RequestGrid shouldUpdate={this.shouldUpdate} requestsList={this.state.requestsList.filter((req)=>req.loanRequestStatus === "APPROVED")}/>
@@ -70,13 +70,10 @@ const ManagerLoanRequests = React.createClass({
                     <Tab label="Кредит выдан"  >
                         <RequestGrid shouldUpdate={this.shouldUpdate} requestsList={this.state.requestsList.filter((req)=>req.loanRequestStatus === "LOAN_ISSUED")}/>
                     </Tab>
-                    <Tab label="Все" value={3} >
-                        <RequestGrid shouldUpdate={this.shouldUpdate} requestsList={this.state.requestsList}/>
-                    </Tab>
                 </Tabs>
             </div>
         )
     }
 })
 
-export default ManagerLoanRequests;
+export default ClientLoanRequests;

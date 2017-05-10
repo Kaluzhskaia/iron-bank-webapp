@@ -8,7 +8,7 @@ const RequestGrid = React.createClass({
 
     render: function () {
         const requestList = this.props.requestsList.length > 0 ? this.props.requestsList.map(loanRequest =>
-            <LoanRequest shouldUpdate={this.props.shouldUpdate} loanRequest={loanRequest} key={loanRequest.id}/>) : <h2>No requests</h2>;
+            <LoanRequest shouldUpdate={this.props.shouldUpdate} loanRequest={loanRequest} key={loanRequest.id}/>) : <h2>Данных нет</h2>;
         return(
             <div>
                 {requestList}

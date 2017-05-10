@@ -4,10 +4,9 @@
 import React from 'react';
 import {ROLES} from "../constants";
 import LoanRequestForm from './LoanRequestForm';
-import ManagerHome from './ManagerHome';
 import AdminHome from './AdminHome';
 import CollectorHome from './CollectorHome';
-import RegSurveyFields from './RegSurveyFields';
+import ManagerLoanRequests from './ManagerLoanRequests';
 
 var roles = [];
 
@@ -17,17 +16,18 @@ const Home = React.createClass({
 
         roles = localStorage.getItem(ROLES);
 
-        if (roles)
+        if (roles) {
             if (roles.includes("ROLE_ADMIN"))
                 return <AdminHome/>;
             else if (roles.includes("ROLE_MANAGER"))
-                return <ManagerHome/>;
+                return <ManagerLoanRequests/>;
             else if (roles.includes("ROLE_COLLECTOR"))
                 return <CollectorHome/>;
             else if (roles.includes("ROLE_CLIENT"))
                 return <LoanRequestForm/>;
-            else
-                return <div>Can not identify user authorities</div>
+        }
+        else
+                return <div>No role</div>;
     }
 });
 
