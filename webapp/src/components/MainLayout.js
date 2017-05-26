@@ -132,7 +132,7 @@ const MainLayout = React.createClass({
                     }
                 ];
             else if (roles.includes("ROLE_COLLECTOR"))
-                rmenuItems = [
+                menuItems = [
                     {
                         id: 1,
                         linkTo:  "/",

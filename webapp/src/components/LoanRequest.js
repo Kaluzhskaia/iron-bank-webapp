@@ -47,25 +47,25 @@ const LoanRequest = React.createClass({
         const roles = localStorage.getItem(ROLES);
 
 
-            switch (this.props.loanRequest.loanRequestStatus) {
-                case "NOT_REVIEWED":
-                    status = "Новая";
-                    statusStyle = {color: 'blue'};
-                    managerDisplay = "none";
-                    break;
-                case "APPROVED" :
-                    statusStyle = {color: 'green'};
-                    status = "Одобрена";
-                    break;
-                case "REJECTED" :
-                    statusStyle = {color: 'red'};
-                    status = "Отклонена";
-                    break;
-                case "LOAN_ISSUED" :
-                    statusStyle = {color: 'gray'};
-                    status = "Кредит выдан";
-                    break;
-            }
+        switch (this.props.loanRequest.loanRequestStatus) {
+            case "NOT_REVIEWED":
+                status = "Новая";
+                statusStyle = {color: 'blue'};
+                managerDisplay = "none";
+                break;
+            case "APPROVED" :
+                statusStyle = {color: 'green'};
+                status = "Одобрена";
+                break;
+            case "REJECTED" :
+                statusStyle = {color: 'red'};
+                status = "Отклонена";
+                break;
+            case "LOAN_ISSUED" :
+                statusStyle = {color: 'gray'};
+                status = "Кредит выдан";
+                break;
+        }
         if (roles.includes("ROLE_MANAGER")) {
             if (this.props.loanRequest.loanRequestStatus == "NOT_REVIEWED") {
                 newRequestButtonDisplay = "inline-block";
@@ -73,7 +73,7 @@ const LoanRequest = React.createClass({
         }
         else if (roles.includes("ROLE_CLIENT")){
             if (this.props.loanRequest.loanRequestStatus == "APPROVED"){
-            issueButtonDisplay = "inline-block";
+                issueButtonDisplay = "inline-block";
             }
         }
 

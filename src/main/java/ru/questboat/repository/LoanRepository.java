@@ -15,4 +15,5 @@ import java.util.List;
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findByLoanRequestIn(Collection<LoanRequest> loanRequests);
+    List<Loan> findByIsRepaid(boolean isRepaid);
 }

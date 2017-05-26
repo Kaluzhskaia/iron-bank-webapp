@@ -1,6 +1,7 @@
 package ru.questboat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.questboat.model.CollectorMission;
 import ru.questboat.model.Loan;
 import ru.questboat.repository.LoanRepository;
 
@@ -13,5 +14,7 @@ import java.util.List;
 public interface CollectorMissionsManager extends ConstantsForLoans {
 
 
-    public void createTasksForCollectorsIfNecessary();
+    void createTasksForCollectorsIfNecessary();
+    List<CollectorMission> getAllActualAndMineMissions(String username);
+    boolean acceptMission(String collectorUsername, Long collectorMissionId);
 }

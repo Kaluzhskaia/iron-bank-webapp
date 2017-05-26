@@ -16,10 +16,9 @@ public class Scheduler {
     @Autowired
     CollectorMissionsManager collectorMissionsManager;
 
-    @Scheduled(cron="0 * * * * ?")
+    @Scheduled(cron="*/15 * * * * ?")
     public void test(){
-        int count = 0;
-        System.out.println("SchedulerCalculate. " + count++ + ". Execute at " + (new Date().toString()));
+        System.out.println("Scheduler execute at " + (new Date().toString()));
         collectorMissionsManager.createTasksForCollectorsIfNecessary();
 
     }

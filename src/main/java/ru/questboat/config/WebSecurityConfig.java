@@ -68,6 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CorsFilter corsFilter;
 
+
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -86,12 +88,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //                полная вседозволенность
                 .antMatchers("/**").permitAll()
+
+
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/api/loan-request").hasRole("CLIENT")
                 .antMatchers("/api/loan-request/**").hasAnyRole("CLIENT", "MANAGER")
                 .antMatchers("/api/loan-request").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+
+                //To enable h2 console
+                .and().headers().frameOptions().disable()
+
+                ;
 
         // Custom JWT based security filter
         httpSecurity

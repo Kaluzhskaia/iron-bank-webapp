@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
+
 /**
  * Created by Mikhail Falaleev on 23.04.2017.
  */
@@ -25,13 +27,15 @@ public class CollectorMission {
     @OneToOne
     private User collector;
 
+    @Enumerated(EnumType.STRING)
     private CollectorMissionType type;
 
     private String report;
 
-    private CollectorMissionStatus status;
+//    private Date reportTime;
 
-    private boolean isChecked;
+    @Enumerated(EnumType.STRING)
+    private CollectorMissionStatus status;
 
 
 }
