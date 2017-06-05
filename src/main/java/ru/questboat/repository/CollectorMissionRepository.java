@@ -2,10 +2,7 @@ package ru.questboat.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.questboat.model.CollectorMission;
-import ru.questboat.model.CollectorMissionStatus;
-import ru.questboat.model.CollectorMissionType;
-import ru.questboat.model.User;
+import ru.questboat.model.*;
 
 import java.util.List;
 
@@ -18,4 +15,6 @@ public interface CollectorMissionRepository extends JpaRepository<CollectorMissi
     List<CollectorMission> findByClientAndTypeAndStatus(User client, CollectorMissionType type, CollectorMissionStatus status);
     List<CollectorMission> findByClientAndTypeNotAndStatus(User client, CollectorMissionType type, CollectorMissionStatus status);
     List<CollectorMission> findByStatusOrCollector(CollectorMissionStatus status, User collector);
+    List<CollectorMission> findByClientAndType(User client, CollectorMissionType type);
+//    List<CollectorMission> findByClientAndTypeAndLoanRequest(User client, CollectorMissionType type, LoanRequest loanRequest);
 }

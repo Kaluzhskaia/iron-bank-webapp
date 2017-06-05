@@ -6,6 +6,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
+import Drawer from 'material-ui/Drawer';
 import axios from 'axios';
 import {PATH_API_LOAN_REQUEST,ROLES} from '../constants';
 import {createAuthorizationTokenHeader} from '../utils.js';
@@ -17,6 +18,12 @@ const style = {
 };
 
 const LoanRequest = React.createClass({
+
+    getInitialState(){
+        return({
+            open: false,
+        })
+    },
 
     handleStatusApprove(e){
         this.statusChange("approve")
@@ -35,6 +42,15 @@ const LoanRequest = React.createClass({
                 this.props.shouldUpdate()
             }
         )
+    },
+
+    handleHelp(){
+      if (this.state.open) {
+          this.setState({open: false})
+      }
+      else{
+          this.setState({open: true})
+      }
     },
     render: function () {
 
@@ -124,9 +140,14 @@ const LoanRequest = React.createClass({
 
                 <RaisedButton name="approved" ref="approved" label="Одобрить" primary={true} style={{width: "33.33%", display: newRequestButtonDisplay}} onTouchTap={this.handleStatusApprove}/>
                 <RaisedButton name="rejected" label="Отказать" secondary={true} style={{width: "33.33%", display: newRequestButtonDisplay}}  onTouchTap={this.handleStatusReject}/>
-                <RaisedButton name="helpButton" label="Помощник"  style={{width: "33.33%", display: newRequestButtonDisplay}}  />
+                <RaisedButton name="helpButton" label="Помощник"  style={{width: "33.33%", display: newRequestButtonDisplay}} onTouchTap={this.handleHelp}  />
                 <RaisedButton name="label-issued" label="Получить кредит" style={{width: "100%", display: issueButtonDisplay}}  onTouchTap={this.handleStatusIssue}/>
+
+                <Drawer width={200} openSecondary={true} open={this.state.open} >
+                    {(this.props.loanRequest.amount / this.props.loanRequest.income > 12) ? "Не рекомедовано" : "Рекомендовано"}
+                </Drawer>
             </Paper>
+
         )},
 });
 

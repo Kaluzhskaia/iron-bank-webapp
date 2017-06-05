@@ -17,4 +17,8 @@ public interface CollectorMissionsManager extends ConstantsForLoans {
     void createTasksForCollectorsIfNecessary();
     List<CollectorMission> getAllActualAndMineMissions(String username);
     boolean acceptMission(String collectorUsername, Long collectorMissionId);
+    boolean completeMission(String collectorUsername, Long collectorMissionId, String report);
+    boolean checkMission(Long collectorMissionId);
+    List<CollectorMission> getAllMissions();
+
 }

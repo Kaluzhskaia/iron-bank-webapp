@@ -56,7 +56,7 @@ public class LoanRequestController {
     public List getMineLoanRequests(HttpServletRequest request){
         String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        return loanRequestManager.findAll();
+        return loanRequestManager.findByClientUsername(username);
     }
 
     @RequestMapping(value = "/loan-request/{id}/{newStatus}", method = RequestMethod.GET)

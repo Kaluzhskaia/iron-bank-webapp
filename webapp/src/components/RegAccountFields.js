@@ -31,7 +31,8 @@ const RegAccountFields = React.createClass({
             errorPswdTxt1: '',
             errorPswdTxt2: '',
             errorMailTxt : '',
-            errorUsernameTxt: ''
+            errorUsernameTxt: '',
+
         }
     },
 

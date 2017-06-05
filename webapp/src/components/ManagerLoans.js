@@ -5,7 +5,7 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import LoanGrid from './LoanGrid';
-import {PATH_API_LOAN_MINE} from '../constants';
+import {PATH_API_LOAN} from '../constants';
 import {createAuthorizationTokenHeader} from '../utils.js';
 import axios from 'axios';
 
@@ -22,10 +22,10 @@ const styles = {
     },
 };
 
-const ClientLoans = React.createClass({
+const ManagerLoans = React.createClass({
 
     componentWillMount(){
-        axios.get(PATH_API_LOAN_MINE, {
+        axios.get(PATH_API_LOAN, {
             headers: createAuthorizationTokenHeader()
         }).then(response => {
             this.setState({
@@ -36,7 +36,7 @@ const ClientLoans = React.createClass({
     },
 
     shouldUpdate(){
-        axios.get(PATH_API_LOAN_MINE, {
+        axios.get(PATH_API_LOAN, {
             headers: createAuthorizationTokenHeader()
         }).then(response => {
             this.setState({
@@ -62,4 +62,4 @@ const ClientLoans = React.createClass({
     }
 })
 
-export default ClientLoans;
+export default ManagerLoans;

@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @Service
-public class LoanManagerImpl implements LoanManager {
+public class LoanManagerImpl implements LoanManager{
 
     @Autowired
     LoanRepository loanRepository;
@@ -50,5 +50,32 @@ public class LoanManagerImpl implements LoanManager {
         User client = userRepository.findByUsername(clientUsername);
         List<LoanRequest> loanRequestList = loanRequestRepository.findByClient(client);
         return loanRepository.findByLoanRequestIn(loanRequestList);
+    }
+
+    @Override
+    public float getShouldPayed(long loanId) {
+        Loan loan = loanRepository.findOne(loanId);
+        long timePassed = (new Date()).getTime() - loan.getIssueDate().getTime();
+        long periodsPassed = timePassed / periodTime;
+        System.out.println("periodsPassed " + periodsPassed);
+        long haveToPay = (long)(loan.getLoanRequest().getAmount() * interestRate);
+        long onePeriodPay = haveToPay / periods;
+        long haveToPayAtTheMoment = periodsPassed * onePeriodPay;
+        System.out.println("haveToPayAtTheMoment " + haveToPayAtTheMoment);
+        if (haveToPayAtTheMoment<haveToPay)
+            return haveToPayAtTheMoment;
+        else
+            return haveToPay;
+    }
+
+    @Override
+    public void pay(long loanId, long pay) {
+        Loan loan = loanRepository.findOne(loanId);
+        long haveToPay = (long)(loan.getLoanRequest().getAmount() * interestRate);
+        loan.setPayed(loan.getPayed() + pay);
+        if (loan.getPayed() >= haveToPay - 1){
+            loan.setRepaid(true);
+        }
+        loanRepository.save(loan);
     }
 }

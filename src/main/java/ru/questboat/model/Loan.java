@@ -27,7 +27,7 @@ public class Loan {
     @JsonView(View.Summary.class)
     private LoanRequest loanRequest;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonView(View.Summary.class)
     private Date issueDate;
 
@@ -38,6 +38,7 @@ public class Loan {
     private int periodCount;
 
     @JsonView(View.Summary.class)
+    @NotNull
     private float interestRate;
 
     @JsonView(View.Summary.class)

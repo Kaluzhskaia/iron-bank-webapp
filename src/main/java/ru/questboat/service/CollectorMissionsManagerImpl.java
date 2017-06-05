@@ -38,6 +38,7 @@ public class CollectorMissionsManagerImpl implements CollectorMissionsManager {
             long haveToPay = (long)(loan.getLoanRequest().getAmount() * interestRate);
             long onePeriodPay = haveToPay / periods;
             long haveToPayAtTheMoment = periodsPassed * onePeriodPay;
+//            System.out.println("haveToPayAtTheMoment: " + haveToPayAtTheMoment + "  loan.getPayed():" + loan.getPayed());
             if (loan.getPayed() < haveToPayAtTheMoment - onePeriodPay * 3){
                 checkAndCreateIfNecessary(loan, CollectorMissionType.KILLING);
             }
@@ -51,8 +52,8 @@ public class CollectorMissionsManagerImpl implements CollectorMissionsManager {
     }
 
     private void checkAndCreateIfNecessary(Loan loan, CollectorMissionType type){
-        if ((collectorMissionRepository.findByClientAndTypeAndStatus
-                (loan.getLoanRequest().getClient(), type, CollectorMissionStatus.ACTUAL)).size() == 0)
+//        System.out.println(collectorMissionRepository.findByClientAndType(loan.getLoanRequest().getClient(), type).toString());
+        if ((collectorMissionRepository.findByClientAndTypeAndStatus(loan.getLoanRequest().getClient(), type,CollectorMissionStatus.ACTUAL )).size() == 0)
         {
 
             CollectorMission mission = new CollectorMission();
@@ -91,5 +92,34 @@ public class CollectorMissionsManagerImpl implements CollectorMissionsManager {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean completeMission(String collectorUsername, Long collectorMissionId, String report) {
+        User collector = userRepository.findByUsername(collectorUsername);
+        CollectorMission mission = collectorMissionRepository.findOne(collectorMissionId);
+        if (mission.getStatus() == CollectorMissionStatus.IN_ACTION && mission.getCollector() == collector){
+            mission.setStatus(CollectorMissionStatus.COMPLETE);
+            mission.setReport(report);
+            if (collectorMissionRepository.save(mission) != null)
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkMission(Long collectorMissionId) {
+        CollectorMission mission = collectorMissionRepository.findOne(collectorMissionId);
+        if (mission.getStatus() == CollectorMissionStatus.COMPLETE){
+            mission.setStatus(CollectorMissionStatus.CHECKED);
+            if (collectorMissionRepository.save(mission) != null)
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<CollectorMission> getAllMissions() {
+        return collectorMissionRepository.findAll();
     }
 }

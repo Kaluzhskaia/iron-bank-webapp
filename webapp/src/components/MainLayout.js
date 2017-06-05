@@ -103,12 +103,6 @@ const MainLayout = React.createClass({
                         label: "Админ",
                         icon: GroupIcon
                     },
-                    {
-                        id: 2,
-                        linkTo:  "/",
-                        label: "Админ2",
-                        icon: GroupIcon
-                    }
                 ];
             else if (roles.includes("ROLE_MANAGER"))
                 menuItems = [
@@ -120,7 +114,7 @@ const MainLayout = React.createClass({
                     },
                     {
                         id: 2,
-                        linkTo:  "/",
+                        linkTo:  "/manager-loans",
                         label: "Кредиты",
                         icon: GroupIcon
                     },
@@ -137,12 +131,6 @@ const MainLayout = React.createClass({
                         id: 1,
                         linkTo:  "/",
                         label: "Коллектор",
-                        icon: GroupIcon
-                    },
-                    {
-                        id: 2,
-                        linkTo:  "/",
-                        label: "Коллектор2",
                         icon: GroupIcon
                     }
                 ];

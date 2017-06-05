@@ -12,6 +12,10 @@ export const PATH_API_LOAN_MINE = PATH_API_LOAN + "/mine";
 export const PATH_API_COLLECTOR_MISSIONS = SERVER_HOST + "/api/mission";
 export const PATH_API_COLLECTOR_MISSIONS_ACTUAL_AND_MINE = PATH_API_COLLECTOR_MISSIONS + "/actual-and-mine";
 export const PATH_API_COLLECTOR_ACCEPT_MISSION = PATH_API_COLLECTOR_MISSIONS + "/collector-accept";
+export const PATH_API_COLLECTOR_COMPLETE_MISSION = PATH_API_COLLECTOR_MISSIONS + "/collector-complete";
+export const PATH_API_MANAGER_APPROVE_MISSION = PATH_API_COLLECTOR_MISSIONS + "/manager-check";
+export const PATH_API_LOAN_SHOULD_BE_PAYED = PATH_API_LOAN + "/should-be-payed";
+export const PATH_API_LOAN_PAY = PATH_API_LOAN + "/pay";
 
 //constants
 export const TOKEN = "token";

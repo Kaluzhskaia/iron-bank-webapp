@@ -16,6 +16,7 @@ import RegistrationForm from './components/RegistrationForm'
 import ClientLoanRequests from './components/ClientLoanRequests'
 import ManagerCollector from './components/ManagerCollector'
 import ClientLoans from './components/ClientLoans'
+import ManagerLoans from './components/ManagerLoans'
 
 export default (
     <Router history={browserHistory}>
@@ -24,6 +25,7 @@ export default (
             <Route path = "manager-collector" component={ManagerCollector}/>
             <Route path = "my-requests" component={ClientLoanRequests}/>
             <Route path = "my-loans" component={ClientLoans}/>
+            <Route path = "manager-loans" component={ManagerLoans}/>
         </Route>
         <Route component={LoginPage}>
             <Route path="login" component={LoginForm}/>

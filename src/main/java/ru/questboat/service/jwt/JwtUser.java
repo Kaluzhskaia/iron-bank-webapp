@@ -116,7 +116,7 @@ public class JwtUser implements UserDetails {
         return lastPasswordResetDate;
     }
 
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     public Date getBirthday() {
         return birthday;
     }

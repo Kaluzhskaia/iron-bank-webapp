@@ -29,6 +29,17 @@ const CollectorHome = React.createClass({
         }).catch();
 
     },
+    shouldUpdate(){
+        axios.get(PATH_API_COLLECTOR_MISSIONS_ACTUAL_AND_MINE, {
+            headers: createAuthorizationTokenHeader()
+        }).then(response => {
+            this.setState({
+                taskList: response.data
+            });
+        }).catch();
+
+    },
+
 
     render: function () {
         return (
@@ -36,7 +47,7 @@ const CollectorHome = React.createClass({
         <div>
             <Tabs>
                 <Tab label="Текущие" >
-                    <CollectorTasksGrid  taskList={this.state.taskList.filter((task)=>task.status === "IN_ACTION")}/>
+                    <CollectorTasksGrid shouldUpdate={this.shouldUpdate} taskList={this.state.taskList.filter((task)=>task.status === "IN_ACTION")}/>
                 </Tab>
                 <Tab label="Доступные" >
                     <CollectorTasksGrid shouldUpdate={this.shouldUpdate} taskList={this.state.taskList.filter((task)=>task.status === "ACTUAL")}/>

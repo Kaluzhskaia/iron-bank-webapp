@@ -1,5 +1,6 @@
 package ru.questboat.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
@@ -72,6 +73,7 @@ public @Data class User {
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     @JsonView(View.Summary.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date birthday;
 
     @Column(name = "CITY")
