@@ -7,21 +7,21 @@ The project aims to teach approaches to iterative software development processes
 UI:
 
 
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/website.jpg)
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/loanform.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/website.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/loanform.jpg)
 
 
 Diagrams:
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/shema1.jpg)
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/shema2.jpg)
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/shema3.jpg)
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/shema4.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/schema1.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/schema2.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/schema3.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/schema4.jpg)
 
 
 Connecting to server:
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/server.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/server.jpg)
 
 
 Bankcard of our bank :D
 
-![](https://github.com/Kaluzhskaia/iron-bank-webapp/new/master/bankcard.jpg)
+![](https://github.com/Kaluzhskaia/iron-bank-webapp/blob/master/bankcard.jpg)
