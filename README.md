@@ -1,5 +1,7 @@
 # Iron Bank Webapp
 
+This team-project was developed for a course of Software development methodologies course at ITMO University in St. Petersburg.
+
 Web application of a Game of Thrones-style Iron Bank. The clients can take loans with good interest. Overdrawing the payment deadline is expensive, though - clients pay with their lives!
 
 The project aims to teach approaches to iterative software development processes such as RUP.
